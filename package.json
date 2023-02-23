@@ -1,0 +1,21 @@
+{
+  "name": "progresspoint",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "env-cmd ./config/dev.env nodemon index.js -e js,hbs",
+    "test": "jest --watchAll"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
+  }
+}
