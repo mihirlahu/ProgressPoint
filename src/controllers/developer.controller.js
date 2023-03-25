@@ -38,39 +38,43 @@ const showHomePage = async function (req, res) {
   }
 };
 
-const loadHome = async function (req, res) {
-  var following = Object.keys(req.user.following);
+// const loadHome = async function (req, res) {
+//   var following = Object.keys(req.user.following);
 
-  const documents = await Document.find({
-    $or: [
-      {
-        $and: [
-          { classRoomId: { $in: following } },
-          { teacherId: { $exists: true } },
-        ],
-      },
-      {
-        $and: [
-          { classRoomId: { $in: following } },
-          { studentId: { $nin: req.user._id } },
-        ],
-      },
-    ],
-  })
-    .populate("teacherId", "name email age")
-    .populate("studentId", "name email age");
+//   const documents = await Document.find({
+//     $or: [
+//       {
+//         $and: [
+//           { classRoomId: { $in: following } },
+//           { teacherId: { $exists: true } },
+//         ],
+//       },
+//       {
+//         $and: [
+//           { classRoomId: { $in: following } },
+//           { studentId: { $nin: req.user._id } },
+//         ],
+//       },
+//     ],
+//   })
+//     .populate("teacherId", "name email age")
+//     .populate("studentId", "name email age");
 
-  documents.forEach((element) => {
-    if (element.teacherId) {
-      element.populate("teacherId", "name email age").execPopulate();
-    } else {
-      element.populate("studentId", "name email age").execPopulate();
-    }
-  });
-  res.send(documents);
-};
+//   documents.forEach((element) => {
+//     if (element.teacherId) {
+//       element.populate("teacherId", "name email age").execPopulate();
+//     } else {
+//       element.populate("studentId", "name email age").execPopulate();
+//     }
+//   });
+//   res.send(documents);
+// };
 
 const Upload = multer({ storage: storage });
+      const developer = req.developer
+      res.render('developerHome', {
+          developer
+      })
 
 const UploadDocument = async function (req, res) {
   //if want to restrict the size and dimentions uncomment below line and replace  uploadDocument.fileUpload = file with uploadDocument.fileUpload = buffer
@@ -162,6 +166,74 @@ const loadTeamRoom = async function (req, res) {
     res.status(500).send("somthing went wrong");
   }
 };
+const loadHome = async function(req, res) {
+  var following = Object.keys(req.developer.following)
+
+  const documents = await Document.find({ $or: [{ $and: [{ teamRoomId: { $in: following } }, { managerId: { $exists: true } }] }, { $and: [{ teamRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }] }] }).populate('managerId', 'name email age').populate('developerId', 'name email age')
+
+  documents.forEach(element => {
+      if (element.managerId) {
+          element.populate('managerId', 'name email age').execPopulate()
+      } else {
+          element.populate('developerId', 'name email age').execPopulate()
+      }
+  });
+  res.send(documents)
+}
+
+const searchClassRoom = async function(req, res) {
+  try {
+
+      const classRoom = await ClassRoom.findOne({ name: req.body.name })
+
+      if (!classRoom) {
+          return alert('Class room not found')
+      }
+
+      res.send(classRoom)
+  } catch (e) {
+      res.status(500).send("somthing went wrong")
+  }
+}
+
+const Logout = async function(req, res) {
+  try {
+      req.developer.tokens = req.developer.tokens.filter((token) => {
+          return token.token !== req.token
+      })
+      await req.developer.save();
+
+      res.render('login');
+  } catch (e) {
+      res.status(500).render('login')
+  }
+}
+
+const UpdateProfile = async function(req, res) {
+  const updates = Object.keys(req.body);
+  const updatesAllowed = ['name', 'age', 'email', 'password'];
+  const isValidOperation = updates.every((update) => updatesAllowed.includes(update));
+
+  if (!isValidOperation) {
+      return res.status(400).send({ error: 'Invalid Update!' })
+  }
+
+  try {
+      updates.forEach((update) => req.developer[update] = req.body[update])
+      await req.developer.save();
+      const developer = req.developer
+      res.send({ redirect: '/developer/profile', developer });
+  } catch (e) {
+      res.status(400).send(e)
+  }
+}
+
+const Profile = async function(req, res) {
+  const developer = req.developer
+  res.render('developerProfile', {
+      developer,
+  })
+}
 
 module.exports = {
   Register: Register,
@@ -174,4 +246,8 @@ module.exports = {
   loadSearch,
   loadTeamRoom,
   loadTeamDetails,
-};
+  Profile: Profile,
+  searchClassRoom,
+  Logout: Logout,
+  UpdateProfile: UpdateProfile,
+}

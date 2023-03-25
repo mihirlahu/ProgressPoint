@@ -1,17 +1,17 @@
 const jwt = require('jsonwebtoken');
-const Teacher = require('../models/teamLead');
-const User = require('../models/user');
+const Manager = require('../models/Manager');
+const Developer = require('../models/developer');
 
-const userAuth = async(req, res, next) => {
+const developerAuth = async(req, res, next) => {
     try {
         const token = req.cookies.access_token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
-        if (!user) {
+        const developer = await Developer.findOne({ _id: decoded._id, 'tokens.token': token });
+        if (!developer) {
             throw new Error()
         }
         req.token = token;
-        req.user = user;
+        req.developer = developer;
         next();
     } catch (e) {
         res.status(401).send({ error: 'please authenticate' });
@@ -23,12 +23,12 @@ const teacherAuth = async(req, res, next) => {
 
         const token = req.cookies.access_token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const teacher = await Teacher.findOne({ _id: decoded._id, 'tokens.token': token });
-        if (!teacher) {
+        const manager = await Manager.findOne({ _id: decoded._id, 'tokens.token': token });
+        if (!manager) {
             throw new Error()
         }
         req.token = token;
-        req.teacher = teacher;
+        req.manager = manager;
         next();
     } catch (e) {
         res.status(401).send({ error: 'please authenticate' });
@@ -36,6 +36,6 @@ const teacherAuth = async(req, res, next) => {
 }
 
 module.exports = {
-    userAuth,
+    developerAuth,
     teacherAuth
 }

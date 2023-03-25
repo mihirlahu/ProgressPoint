@@ -89,6 +89,6 @@ teacherSchema.methods.toJSON = function() {
     return teacherObject
 }
 
-const Teacher = mongoose.model('Teacher', teacherSchema)
+const Manager = mongoose.model('Manager', teacherSchema)
 
-module.exports = Teacher;
+module.exports = Manager;

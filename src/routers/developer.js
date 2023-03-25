@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const auth = require("../middleware/auth").userAuth;
+const auth = require('../middleware/auth').developerAuth
 const developerControllers = require("../controllers/developer.controller");
 
 router.post("/register/developer", developerControllers.Register);
@@ -21,5 +21,9 @@ router.get(
 router.get("/loadSearch", auth, developerControllers.loadSearch);
 router.get("/developer/loadSearch", auth, developerControllers.loadTeamDetails);
 router.post("/developer/loadSearch", auth, developerControllers.loadTeamRoom);
+router.post("/search", auth, developerControllers.searchClassRoom);
+router.get("/developer/profile", auth, developerControllers.Profile);
+router.get("/developer/logout", auth, developerControllers.Logout);
+router.patch('/developer/profile/update', auth, developerControllers.UpdateProfile);
 
 module.exports = router;

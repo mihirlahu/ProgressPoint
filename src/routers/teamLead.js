@@ -1,10 +1,10 @@
 const express = require('express');
 const auth = require('../middleware/auth').teacherAuth
 const router = new express.Router();
-const teacherControllers = require('../controllers/teacher.controller')
+const teacherControllers = require('../controllers/manager.controller')
 
-router.post("/register/teacher", teacherControllers.Register)
-router.post("/login/teacher", teacherControllers.Login)
+router.post("/register/manager", teacherControllers.Register)
+router.post("/login/manager", teacherControllers.Login)
 
 
 module.exports = router;
