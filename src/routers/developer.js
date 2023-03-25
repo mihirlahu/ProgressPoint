@@ -19,11 +19,7 @@ router.get(
   developerControllers.getDocument
 );
 router.get("/loadSearch", auth, developerControllers.loadSearch);
-router.get(
-  "/developer/loadSearch",
-  auth,
-  developerControllers.loadClassDetails
-);
-router.post("/developer/loadSearch", auth, developerControllers.loadClassRoom);
+router.get("/developer/loadSearch", auth, developerControllers.loadTeamDetails);
+router.post("/developer/loadSearch", auth, developerControllers.loadTeamRoom);
 
 module.exports = router;
