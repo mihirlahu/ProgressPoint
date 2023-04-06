@@ -39,20 +39,20 @@ const showHomePage = async function (req, res) {
 };
 
 // const loadHome = async function (req, res) {
-//   var following = Object.keys(req.user.following);
+//   var following = Object.keys(req.developer.following);
 
 //   const documents = await Document.find({
 //     $or: [
 //       {
 //         $and: [
-//           { classRoomId: { $in: following } },
+//           { meetingRoomId: { $in: following } },
 //           { teacherId: { $exists: true } },
 //         ],
 //       },
 //       {
 //         $and: [
-//           { classRoomId: { $in: following } },
-//           { studentId: { $nin: req.user._id } },
+//           { meetingRoomId: { $in: following } },
+//           { studentId: { $nin: req.developer._id } },
 //         ],
 //       },
 //     ],
@@ -81,8 +81,8 @@ const UploadDocument = async function (req, res) {
   //const buffer = await sharp(req.file).resize({ width: 250, height: 250 }).png()
   const file = req.file;
   try {
-    const teamRoom = await teamRoom.findOne({ name: req.body.name });
-    const developers = Object.keys(teamRoom.developers);
+    const meetingRoom = await meetingRoom.findOne({ name: req.body.name });
+    const developers = Object.keys(meetingRoom.developers);
     var flag = 0;
 
     if (developers.length > 0) {
@@ -99,7 +99,7 @@ const UploadDocument = async function (req, res) {
     if (flag == 1) {
       const uploadDocument = new UploadDocuments({
         developerId: req.developer._id,
-        teamRoomId: teamRoom._id,
+        meetingRoomId: meetingRoom._id,
         name: req.body.name,
         description: req.body.description,
       });
@@ -115,16 +115,16 @@ const UploadDocument = async function (req, res) {
     if (e) {
       res.status(500).send(e);
     } else {
-      res.status(500).send("Team not found");
+      res.status(500).send("Meeting not found");
     }
   }
 };
 
 const getDocument = async function (req, res) {
   try {
-    var teamRoom = [];
-    teamRoom = await Document.find({ developerId: req.developer._id });
-    res.send(teamRoom);
+    var meetingRoom = [];
+    meetingRoom = await Document.find({ developerId: req.developer._id });
+    res.send(meetingRoom);
   } catch (e) {
     res.status(500).send("somthing went wrong while getting document");
   }
@@ -149,19 +149,19 @@ const loadTeamDetails = async function (req, res) {
     res.status(500).send("somthing went wrong while loading page");
   }
 };
-const loadTeamRoom = async function (req, res) {
+const loadmeetingRoom = async function (req, res) {
   try {
-    const teamRoom = await TeamRoom.findOne({ name: req.body.name }).populate(
+    const meetingRoom = await meetingRoom.findOne({ name: req.body.name }).populate(
       "owner",
       "name email age"
     );
-    //teamRoom.populate('owner', 'name email age').execPopulate()
+    //meetingRoom.populate('owner', 'name email age').execPopulate()
 
-    if (!teamRoom) {
+    if (!meetingRoom) {
       return alert("Team room not found");
     }
 
-    res.send(teamRoom);
+    res.send(meetingRoom);
   } catch (e) {
     res.status(500).send("somthing went wrong");
   }
@@ -173,13 +173,13 @@ const loadHome = async function (req, res) {
     $or: [
       {
         $and: [
-          { teamRoomId: { $in: following } },
+          { meetingRoomId: { $in: following } },
           { managerId: { $exists: true } },
         ],
       },
       {
         $and: [
-          { teamRoomId: { $in: following } },
+          { meetingRoomId: { $in: following } },
           { developerId: { $nin: req.developer._id } },
         ],
       },
@@ -198,15 +198,15 @@ const loadHome = async function (req, res) {
   res.send(documents);
 };
 
-const searchClassRoom = async function (req, res) {
+const searchmeetingRoom = async function (req, res) {
   try {
-    const classRoom = await ClassRoom.findOne({ name: req.body.name });
+    const meetingRoom = await meetingRoom.findOne({ name: req.body.name });
 
-    if (!classRoom) {
-      return alert("Class room not found");
+    if (!meetingRoom) {
+      return alert("Meeting room not found");
     }
 
-    res.send(classRoom);
+    res.send(meetingRoom);
   } catch (e) {
     res.status(500).send("somthing went wrong");
   }
@@ -253,19 +253,92 @@ const Profile = async function (req, res) {
   });
 };
 
+const developerRoomFollow = async function(req, res) {
+  const developerProfile = req.developer
+  const developerId = req.developer._id
+  const meetingRoomId = req.body.id
+  try {
+      const meetingRoom = await meetingRoom.findOne({ _id: meetingRoomId })
+      if (meetingRoomId in developerProfile.following) {
+
+          delete developerProfile.following[meetingRoomId]
+          delete meetingRoom.students[developerId]
+
+          developerProfile.meetingRoomCount = developerProfile.meetingRoomCount - 1
+          meetingRoom.studentCount = meetingRoom.studentCount - 1
+
+          developerProfile.markModified('following')
+          developerProfile.markModified('meetingRoomCount')
+          meetingRoom.markModified('students')
+          meetingRoom.markModified('studentCount')
+          await meetingRoom.save()
+          await developerProfile.save()
+          return res.status(201).send(developerProfile)
+      }
+      meetingRoom.students[developerId] = developerId
+      developerProfile.following[meetingRoomId] = meetingRoomId
+      developerProfile.meetingRoomCount = developerProfile.meetingRoomCount + 1
+      meetingRoom.studentCount = meetingRoom.studentCount + 1
+      developerProfile.markModified('following')
+      developerProfile.markModified('meetingRoomCount')
+      meetingRoom.markModified('students')
+      meetingRoom.markModified('studentCount')
+      await meetingRoom.save()
+      await developerProfile.save()
+      res.send(developerProfile)
+
+  } catch (e) {
+      res.status(500).send("somthing went wrong");
+  }
+}
+
+const searchMeetingRoom = async function(req, res) {
+  try {
+
+      const meetingRoom = await meetingRoom.findOne({ name: req.body.name })
+
+      if (!meetingRoom) {
+          return alert('Meeting room not found')
+      }
+
+      res.send(meetingRoom)
+  } catch (e) {
+      res.status(500).send("somthing went wrong")
+  }
+}
+
+const loadMeetingRoom = async function(req, res) {
+  try {
+
+      const meetingRoom = await meetingRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
+          //meetingRoom.populate('owner', 'name email age').execPopulate()
+
+      if (!meetingRoom) {
+          return alert('Meeting room not found')
+      }
+
+      res.send(meetingRoom)
+  } catch (e) {
+      res.status(500).send("somthing went wrong")
+  }
+}
+
 module.exports = {
   Register: Register,
   Login: Login,
+  Profile: Profile,
+  Logout: Logout,
+  UpdateProfile: UpdateProfile,
+  Upload,
   showHomePage,
   loadHome,
-  Upload,
   UploadDocument,
   getDocument,
   loadSearch,
-  loadTeamRoom,
+  loadmeetingRoom,
   loadTeamDetails,
-  Profile: Profile,
-  searchClassRoom,
-  Logout: Logout,
-  UpdateProfile: UpdateProfile,
+  searchmeetingRoom,  
+  developerRoomFollow,
+  searchMeetingRoom,
+  loadMeetingRoom
 };
