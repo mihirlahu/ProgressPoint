@@ -45,13 +45,13 @@ const showHomePage = async function (req, res) {
 //     $or: [
 //       {
 //         $and: [
-//           { meetingRoomId: { $in: following } },
+//           { chatRoomId: { $in: following } },
 //           { teacherId: { $exists: true } },
 //         ],
 //       },
 //       {
 //         $and: [
-//           { meetingRoomId: { $in: following } },
+//           { chatRoomId: { $in: following } },
 //           { studentId: { $nin: req.developer._id } },
 //         ],
 //       },
@@ -81,8 +81,8 @@ const UploadDocument = async function (req, res) {
   //const buffer = await sharp(req.file).resize({ width: 250, height: 250 }).png()
   const file = req.file;
   try {
-    const meetingRoom = await meetingRoom.findOne({ name: req.body.name });
-    const developers = Object.keys(meetingRoom.developers);
+    const chatRoom = await chatRoom.findOne({ name: req.body.name });
+    const developers = Object.keys(chatRoom.developers);
     var flag = 0;
 
     if (developers.length > 0) {
@@ -99,7 +99,7 @@ const UploadDocument = async function (req, res) {
     if (flag == 1) {
       const uploadDocument = new UploadDocuments({
         developerId: req.developer._id,
-        meetingRoomId: meetingRoom._id,
+        chatRoomId: chatRoom._id,
         name: req.body.name,
         description: req.body.description,
       });
@@ -115,16 +115,16 @@ const UploadDocument = async function (req, res) {
     if (e) {
       res.status(500).send(e);
     } else {
-      res.status(500).send("Meeting not found");
+      res.status(500).send("chat room not found");
     }
   }
 };
 
 const getDocument = async function (req, res) {
   try {
-    var meetingRoom = [];
-    meetingRoom = await Document.find({ developerId: req.developer._id });
-    res.send(meetingRoom);
+    var chatRoom = [];
+    chatRoom = await Document.find({ developerId: req.developer._id });
+    res.send(chatRoom);
   } catch (e) {
     res.status(500).send("somthing went wrong while getting document");
   }
@@ -149,23 +149,7 @@ const loadTeamDetails = async function (req, res) {
     res.status(500).send("somthing went wrong while loading page");
   }
 };
-const loadmeetingRoom = async function (req, res) {
-  try {
-    const meetingRoom = await meetingRoom.findOne({ name: req.body.name }).populate(
-      "owner",
-      "name email age"
-    );
-    //meetingRoom.populate('owner', 'name email age').execPopulate()
 
-    if (!meetingRoom) {
-      return alert("Meeting room not found");
-    }
-
-    res.send(meetingRoom);
-  } catch (e) {
-    res.status(500).send("something went wrong");
-  }
-};
 const loadHome = async function (req, res) {
   var following = Object.keys(req.developer.following);
 
@@ -173,13 +157,13 @@ const loadHome = async function (req, res) {
     $or: [
       {
         $and: [
-          { meetingRoomId: { $in: following } },
+          { chatRoomId: { $in: following } },
           { managerId: { $exists: true } },
         ],
       },
       {
         $and: [
-          { meetingRoomId: { $in: following } },
+          { chatRoomId: { $in: following } },
           { developerId: { $nin: req.developer._id } },
         ],
       },
@@ -196,20 +180,6 @@ const loadHome = async function (req, res) {
     }
   });
   res.send(documents);
-};
-
-const searchmeetingRoom = async function (req, res) {
-  try {
-    const meetingRoom = await meetingRoom.findOne({ name: req.body.name });
-
-    if (!meetingRoom) {
-      return alert("Meeting room not found");
-    }
-
-    res.send(meetingRoom);
-  } catch (e) {
-    res.status(500).send("somthing went wrong");
-  }
 };
 
 const Logout = async function (req, res) {
@@ -253,73 +223,73 @@ const Profile = async function (req, res) {
   });
 };
 
-const developerRoomFollow = async function(req, res) {
+const developerRoomFollow = async function (req, res) {
   const developerProfile = req.developer
   const developerId = req.developer._id
-  const meetingRoomId = req.body.id
+  const chatRoomId = req.body.id
   try {
-      const meetingRoom = await meetingRoom.findOne({ _id: meetingRoomId })
-      if (meetingRoomId in developerProfile.following) {
+    const chatRoom = await chatRoom.findOne({ _id: chatRoomId })
+    if (chatRoomId in developerProfile.following) {
 
-          delete developerProfile.following[meetingRoomId]
-          delete meetingRoom.students[developerId]
+      delete developerProfile.following[chatRoomId]
+      delete chatRoom.students[developerId]
 
-          developerProfile.meetingRoomCount = developerProfile.meetingRoomCount - 1
-          meetingRoom.studentCount = meetingRoom.studentCount - 1
+      developerProfile.chatRoomCount = developerProfile.chatRoomCount - 1
+      chatRoom.studentCount = chatRoom.studentCount - 1
 
-          developerProfile.markModified('following')
-          developerProfile.markModified('meetingRoomCount')
-          meetingRoom.markModified('students')
-          meetingRoom.markModified('studentCount')
-          await meetingRoom.save()
-          await developerProfile.save()
-          return res.status(201).send(developerProfile)
-      }
-      meetingRoom.students[developerId] = developerId
-      developerProfile.following[meetingRoomId] = meetingRoomId
-      developerProfile.meetingRoomCount = developerProfile.meetingRoomCount + 1
-      meetingRoom.studentCount = meetingRoom.studentCount + 1
       developerProfile.markModified('following')
-      developerProfile.markModified('meetingRoomCount')
-      meetingRoom.markModified('students')
-      meetingRoom.markModified('studentCount')
-      await meetingRoom.save()
+      developerProfile.markModified('chatRoomCount')
+      chatRoom.markModified('students')
+      chatRoom.markModified('studentCount')
+      await chatRoom.save()
       await developerProfile.save()
-      res.send(developerProfile)
+      return res.status(201).send(developerProfile)
+    }
+    chatRoom.students[developerId] = developerId
+    developerProfile.following[chatRoomId] = chatRoomId
+    developerProfile.chatRoomCount = developerProfile.chatRoomCount + 1
+    chatRoom.studentCount = chatRoom.studentCount + 1
+    developerProfile.markModified('following')
+    developerProfile.markModified('chatRoomCount')
+    chatRoom.markModified('students')
+    chatRoom.markModified('studentCount')
+    await chatRoom.save()
+    await developerProfile.save()
+    res.send(developerProfile)
 
   } catch (e) {
-      res.status(500).send("somthing went wrong");
+    res.status(500).send("somthing went wrong");
   }
 }
 
-const searchMeetingRoom = async function(req, res) {
+const searchchatRoom = async function (req, res) {
   try {
 
-      const meetingRoom = await meetingRoom.findOne({ name: req.body.name })
+    const chatRoom = await chatRoom.findOne({ name: req.body.name })
 
-      if (!meetingRoom) {
-          return alert('Meeting room not found')
-      }
+    if (!chatRoom) {
+      return alert('Chat room not found')
+    }
 
-      res.send(meetingRoom)
+    res.send(chatRoom)
   } catch (e) {
-      res.status(500).send("somthing went wrong")
+    res.status(500).send("something went wrong")
   }
 }
 
-const loadMeetingRoom = async function(req, res) {
+const loadchatRoom = async function (req, res) {
   try {
 
-      const meetingRoom = await meetingRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
-          //meetingRoom.populate('owner', 'name email age').execPopulate()
+    const chatRoom = await chatRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
+    //chatRoom.populate('owner', 'name email age').execPopulate()
 
-      if (!meetingRoom) {
-          return alert('Meeting room not found')
-      }
+    if (!chatRoom) {
+      return alert('Chat room not found')
+    }
 
-      res.send(meetingRoom)
+    res.send(chatRoom)
   } catch (e) {
-      res.status(500).send("somthing went wrong")
+    res.status(500).send("something went wrong")
   }
 }
 
@@ -335,10 +305,9 @@ module.exports = {
   UploadDocument,
   getDocument,
   loadSearch,
-  loadmeetingRoom,
+  loadchatRoom,
   loadTeamDetails,
-  searchmeetingRoom,  
+  searchchatRoom,
   developerRoomFollow,
-  searchMeetingRoom,
-  loadMeetingRoom
+  loadchatRoom
 };
