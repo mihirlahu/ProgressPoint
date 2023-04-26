@@ -15,7 +15,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/css/loginstyle2.css" />
+    <link rel="stylesheet" href="/css/loginstyle.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -25,48 +25,109 @@
   </head>
 
   <body>
-    <div class="login">
-     <div class="loginWrapper">
-          <div class="loginLeft">
-            <h3 class="loginLogo">ProgressPoint</h3>
-            <span class="loginDesc">Connect with team here</span>
-          </div>
-          <div class="loginRight">
-            <form class="loginBox" id="loginForm">
-              <select
-                class="loginDropdown"
-                type="dropdown"
-                id="login-dropdown"
-                name="userType"
-                required="true"
-              >
-                <option value="Developer">Developer</option>
-                <option value="Manager">Manager</option>
-              </select>
-              <input
-                placeholder="Email"
-                class="loginInput"
-                name="email"
-                type="email"
-              />
-              <input
-                placeholder="Password"
-                class="loginInput"
-                name="password"
-                type="password"
-              />
-              <button class="loginButton" id="login-submit">Log In</button>
-              <span class="loginForgot">Forgot Password?</span>
-              <button
-                type="button"
-                class="loginRegisterButton"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >Sign up</button>
-            </form>
+    <div class="row no-gutters">
+      <div class="col no-gutters" id="div1">
+        <div class="leftside">
+          <div class="left-content">
+            <div class="div1">You're one step away from the shiny new Class room</div>
+            <div class="div2">We've added tons of cool features, including...</div>
+            <div class="div3">
+              <span class="hashbook">
+                <h2><i class="fa fa-hashtag"></i></h2>
+              </span>
+              <div>
+                <div class="div3-1">Explore</div>
+                <div class="div3-2">Get the latest Task, assignments, and videos
+                  in one place.</div>
+              </div>
+            </div>
+            <div class="div4">
+              <span class="hashbook">
+                <h2><i class="fa fa-bookmark"></i></h2>
+              </span>
+              <div>
+                <div class="div4-1">Bookmarks</div>
+                <div class="div4-2">Save the latest task for later.</div>
+              </div>
+            </div>
           </div>
         </div>
 
+      </div>
+      <div class="col no-gutters" id="div2">
+        <div class="rightside">
+          <form class="login" id="loginForm">
+            <table cellpadding="5">
+              <tr>
+                <td><input
+                    class="input2"
+                    type="email"
+                    id="login-email"
+                    name="email"
+                    placeholder="Email"
+                    required="true"
+                  />
+                  <p id="p2"></p>
+                </td>
+                <td>
+                  <select
+                    class="input2 dropDown"
+                    type="dropdown"
+                    id="login-dropdown"
+                    name="userType"
+                    required="true"
+                  >
+                    <option value="Developer">Developer</option>
+                    <option value="Manager">Manager</option>
+                  </select>
+                  <p id="p1"></p>
+                </td>
+                <td><input
+                    class="input2"
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    placeholder="Password"
+                    required="true"
+                  />
+                  <p id="p1"></p>
+                </td>
+                <td>
+                  <button
+                    id="login-submit"
+                    form="loginForm"
+                    class="button1"
+                    type="submit"
+                    value="submit"
+                  >
+                    <b>Log in</b>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </form>
+
+          <div class="right-content">
+            <div>
+              <img
+                src="/img/manager-clipart-google-classroom-5.png"
+                class="rightImage"
+                alt=""
+              />
+            </div>
+            <h1 class="header1">See what's happening in the class room right now</h1>
+            <div>
+              <h2 class="header2">Join Class Room today.</h2>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="signup"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#exampleModal"
+              >Sign up</button>
+            </div>
             <!-- Modal -->
             <div
               class="modal fade"
@@ -115,7 +176,7 @@
                         />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputType1">User Type : </label>
+                        <label for="exampleInputType1">Developer Type : </label>
                         <input
                           type="radio"
                           for="exampleInputType1"
@@ -145,7 +206,8 @@
                           placeholder="Enter email"
                           required="true"
                         />
-     
+                        <small id="emailHelp" class="form-text text-muted">We'll
+                          never share your email with anyone else.</small>
                       </div>
 
                       <div class="form-group">
