@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Tasks = require('./chatRoom')
 
-const teacherSchema = new mongoose.Schema({
+const managerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -44,15 +45,15 @@ const teacherSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    classRoomCreatedCount: {
+    chatRoomCreatedCount: {
         type: Number,
         default: 0
     },
-    classRoomFollowedCount: {
+    chatRoomFollowedCount: {
         type: Number,
         default: 0
     },
-    classRooms: {
+    chatRooms: {
         type: mongoose.Schema.Types.Mixed,
         default: {}
     },
@@ -69,8 +70,20 @@ const teacherSchema = new mongoose.Schema({
     timestamps: true
 })
 
+managerSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})
 
-teacherSchema.methods.generateAuthToken = async function() {
+managerSchema.virtual('documentData', {
+    ref: 'DocumentData',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
+
+managerSchema.methods.generateAuthToken = async function() {
 
     const token = jwt.sign({ _id: this._id }, 'thisismynewtoken');
 
@@ -79,16 +92,44 @@ teacherSchema.methods.generateAuthToken = async function() {
     return token;
 }
 
-teacherSchema.methods.toJSON = function() {
-    const teacherObject = this.toObject();
+managerSchema.methods.toJSON = function() {
+    const managerObject = this.toObject();
 
-    delete teacherObject.password;
-    delete teacherObject.tokens;
-    delete teacherObject.avatar;
+    delete managerObject.password;
+    delete managerObject.tokens;
+    delete managerObject.avatar;
 
-    return teacherObject
+    return managerObject
+}
+managerSchema.statics.findByCredentials = async(email, password) => {
+    const manager = await Manager.findOne({ email });
+
+    if (!manager) {
+        throw new Error('unable to login');
+    }
+
+    const isMatch = await bcrypt.compare(password, manager.password)
+
+    if (!isMatch) {
+        throw new Error('unable to login');
+    }
+    return manager
 }
 
-const Manager = mongoose.model('Manager', teacherSchema)
+managerSchema.pre('save', async function(next) {
+
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 8);
+    }
+    next()
+})
+
+managerSchema.pre('remove', async function(next) {
+
+    await Tasks.deleteMany({ owner: this._id })
+    next();
+})
+
+const Manager = mongoose.model('Manager', managerSchema)
 
 module.exports = Manager;

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/class-room-api', {
-    useNewUrlParser: true,
-    useCreateIndex: true
-})
+mongoose.connect("mongodb://127.0.0.1:27017/progressPoint", {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
