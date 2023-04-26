@@ -86,6 +86,11 @@
   cursor: pointer;
 }
 
+.invoke-like {
+  border: none;
+  background: none;
+}
+
 .postLikeCounter {
   font-size: 15px;
 }

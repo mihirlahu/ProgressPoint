@@ -1,0 +1,81 @@
+.col-sm-3 {
+    height: 100vh;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: black;
+    line-clamp: 25px;
+    /* background-color: blue; */
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.icon {
+    margin-right: 20px;
+}
+
+.top-icon {
+    margin-bottom: 20px;
+}
+
+.signup {
+    border-radius: 100px;
+    box-shadow: none;
+    cursor: pointer;
+    background-color: #38A1F2;
+    color: white;
+    width: 80%;
+    line-height: 40px;
+}
+
+li .signup :hover {
+    opacity: 1;
+}
+
+#logoutUser {
+    cursor: pointer;
+}
+
+#logoutUser:hover {
+    color: #0B56B3;
+}
+
+
+/* break for following style */
+
+h3 {
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    width: 100%;
+    color: rgb(46, 44, 42);
+}
+
+.developer {
+    /* margin-left: 20px;
+  margin-top: 10px; */
+    margin: 10px;
+    margin-left: 30px;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+.twitter-handle {
+    color: rgb(125, 126, 128);
+    margin-left: 20px;
+}
+
+.signup,
+#side-post {
+    background-color: rgb(46, 44, 42);
+}

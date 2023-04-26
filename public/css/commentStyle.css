@@ -1,0 +1,48 @@
+.modal-content {
+    overflow-y: scroll;
+  }
+  
+  .commentHr {
+    border: 1px solid grey;
+    width: 90%;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .modalComment {
+    padding: 1rem 1rem 0 1rem;
+  }
+  .commentPostButton {
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+  }
+  
+  .commentPostButton:hover {
+    background-color: rgb(66, 66, 66);
+  }
+  
+  .modalAllComments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .modalCommentWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid darkgray;
+  }
+  
+  .modalCommentUsername {
+    font-weight: 700;
+    font-size: 16px;
+  }
+  
+  .modalCommentContent {
+  }
+  
