@@ -1,0 +1,76 @@
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/searchstyle.css">
+    <link rel="icon" href="/img/apple-icon-120x120.png">
+    <title>Search</title>
+</head>
+
+
+
+<body>
+
+    <div class="pageContainer">
+        <div class="sidebarContainer">
+            <div class="logoDiv">
+                <li class="top-icon">
+                        <img class="topLogo" src="/img/Webp.net-resizeimage.png" alt="">
+                </li>
+                <span class="logoname">ProgressPoint</span>
+            </div>
+           {{>sidebarTeacher}}
+        </div>
+            <div class="mainContainer">
+                <div class="headerDiv">
+                    <h3>Search here!</h3>
+                </div>
+                <div class="searchInput">
+                    <input type="text" id="ClassName" class="form-control" placeholder="search class name"
+                        aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="searchIcon" type="button" data-userid = "{{developer._id}}" id="button-addon2"><i
+                                class="fa fa-search click"></i></button>
+                    </div>
+                </div>
+
+                {{!-- ----profile---- --}}
+                <div id="append"></div>
+            </div>
+    </div>
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+                <script src="/socket.io/socket.io.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+            {{!-- <script src="js/searchUser.js"></script>
+            <script src="/js/followUser.js"></script>
+            <script src="js/sideBar.js"></script>
+             <script src="js/sideBar.js"></script> --}}
+    {{!-- <script src="/js/creatTweet.js"></script>
+    <script src="js/loadTweets.js"></script>
+    <script src="js/tweetFunctions.js"></script> --}}
+     <script src="/js/TeacherUpload.js"></script>
+     <script src="/js/TeacherSearch.js"></script>
+
+ 
+</body>
+
+</html>
