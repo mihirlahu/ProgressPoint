@@ -1,5 +1,4 @@
-console.log("document loaded");
-
+var currentUser = $('.headerDiv').data('username')
 $(document).ready(() => {
   $("#creatClass").click((e) => {
     e.preventDefault();
@@ -38,6 +37,8 @@ $(document).ready(() => {
     success: function (data) {
       data.forEach((element) => {
         if (element.developerId) {
+          let userId =
+            element.developerId._id?.toString() + "/" + element?._id + "0";
           $("#toAppend").prepend(`
             <div class="postWrapper">
                                 <div class="postTop">
@@ -54,28 +55,93 @@ $(document).ready(() => {
                                   
                                 </div>
                                 <div class="postCenter">
-                                    <img class="postImg" src="http://localhost:3000/images/${element?.fileUpload?.filename}" alt="" />
-                                    <span class="postText"> This is the description of a post dasifggfasdkjgfhaskjfha lkajsdhflkjhafg jhasdlkjfhaslkj </span>
+                                    <img class="postImg" src="http://localhost:3000/images/${
+                                      element?.fileUpload?.filename
+                                    }" alt="" />
+                                    <span class="postText"> ${
+                                      element?.description
+                                    } </span>
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
+
+                                    <button class="invoke-like" data-userId="${
+                                      element.developerId._id
+                                    }" data-postId="${
+            element?._id
+          }" data-isManager="0" 
+                                    onclick="likePost(event)" >
                                     <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/like.png"
-                                        alt=""
-                            
+                                    data-userId="${
+                                      element.developerId._id
+                                    }" data-postId="${
+            element?._id
+          }" data-isManager="0" 
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${
+                                      element.likedBy.indexOf(
+                                        element.developerId._id
+                                      ) >= 0
+                                        ? "heart.png "
+                                        : "heartless.png"
+                                    } "
+                                    alt=""
                                     />
-                                    <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/heart.png"
-                                        alt=""
-                    
-                                    />
-                                    <span class="postLikeCounter">2 people like this</span>
+                                </button>
+                                    <span class="postLikeCounter">${
+                                      element.likeCount
+                                    }  people like this</span>
                                     </div>
-                                    <div class="postBottomRight">
-                                        <span class="postCommentText">9 comments</span>
+                                    <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
+                                    <span class="postCommentText" data-userId="${
+                                      element.developerId._id
+                                    }" data-postId="${element?._id}" 
+          data-isManager="0" 
+          data-username=${element.developerId.name}>
+                                    Comments</span>
                                     </div>
+                                    <div
+                                      class="modal fade"
+                                      id="commentModal"
+                                      tabindex="-1"
+                                      role="dialog"
+                                      aria-labelledby="commentModalLabel"
+                                      aria-hidden="true"
+                              >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Comment</h5>
+                    <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onclick= "clearInput()"
+                    >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modalComment">
+                    <form id="modalCommentForm" name="modalCommentForm" enctype="multipart/form-data">
+                        <div class="modalCommentInput form-group">
+                            <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
+                        </div>
+                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
+                          element.developerId._id
+                        }" data-postId="${
+            element?._id
+          }" data-isManager="0" aria-hidden="true">Post Comment</button>
+                    </form>
+                </div>
+                <hr class="commentHr">
+                <div class="modalAllComments">
+                    <div class="modalCommentWrapper">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                                 </div>`);
         } else {
           $("#toAppend").prepend(`
@@ -94,28 +160,93 @@ $(document).ready(() => {
                                   
                                 </div>
                                 <div class="postCenter">
-                                    <img class="postImg" src="http://localhost:3000/images/${element?.fileUpload?.filename}" alt="" />
-                                    <span class="postText"> This is the description of a post dasifggfasdkjgfhaskjfha lkajsdhflkjhafg jhasdlkjfhaslkj </span>
+                                    <img class="postImg" src="http://localhost:3000/images/${
+                                      element?.fileUpload?.filename
+                                    }" alt="" />
+                                    <span class="postText"> ${
+                                      element?.description
+                                    }  </span>
                                 </div>
                                  <div class="postBottom">
                                     <div class="postBottomLeft">
+
+                                    <button class="invoke-like" data-userId="${
+                                      element.managerId._id
+                                    }" data-postId="${
+            element?._id
+          }" data-isManager="1" onclick="likePost(event)">
                                     <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/like.png"
-                                        alt=""
-                            
+                                    data-userId="${
+                                      element.managerId._id
+                                    }" data-postId="${
+            element?._id
+          }" data-isManager="1"
+                                    class="likeIcon"
+                                    src="http://localhost:3000/img/${
+                                      element.likedBy.indexOf(
+                                        element.managerId._id
+                                      ) >= 0
+                                        ? "heart.png "
+                                        : "heartless.png"
+                                    } "
+                                    alt=""
+                        
                                     />
-                                    <img
-                                        class="likeIcon"
-                                        src="http://localhost:3000/img/heart.png"
-                                        alt=""
-                    
-                                    />
-                                    <span class="postLikeCounter">2 people like this</span>
+                                </button>
+                                    <span class="postLikeCounter">${
+                                      element.likeCount
+                                    }  people like this</span>
                                     </div>
-                                    <div class="postBottomRight">
-                                        <span class="postCommentText">9 comments</span>
+                                    <div class="postBottomRight" data-toggle="modal" data-target="#commentModal">
+                                    <span class="postCommentText" data-userId="${
+                                      element.managerId._id
+                                    }" data-postId="${
+            element?._id
+          }" data-isManager="1" 
+          data-username=${element.managerId.name}>
+                                    Comments</span>
                                     </div>
+                                    <div
+                                      class="modal fade"
+                                      id="commentModal"
+                                      tabindex="-1"
+                                      role="dialog"
+                                      aria-labelledby="commentModalLabel"
+                                      aria-hidden="true"
+                              >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Comment</h5>
+                    <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    onclick= "clearInput()"
+                    >
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modalComment">
+                    <form id="modalCommentForm" name="modalCommentForm" enctype="multipart/form-data">
+                        <div class="modalCommentInput form-group">
+                            <input  type="text" id="comment-content" name="comment" class="form-control" id="commentModalTextArea" rows="1" placeholder="Comment here" required='true'></input>
+                        </div>
+                        <button id="comment-post1" form="modalCommentPost" type="submit" class="commentPostButton " data-userId="${
+                          element.managerId._id
+                        }" data-postId="${
+            element?._id
+          }" data-isManager="1"  aria-hidden="true">Post Comment</button>
+                    </form>
+                </div>
+                <hr class="commentHr">
+                <div class="modalAllComments">
+      
+                </div>
+            </div>
+        </div>
+    </div>
                                 </div>`);
         }
       });
@@ -125,3 +256,67 @@ $(document).ready(() => {
     },
   });
 });
+
+
+function clearInput() {
+  document.getElementById("comment-content").value = "";
+}
+
+function likePost(e) {
+  e.preventDefault();
+  let userId = e.target.dataset.userid;
+  let postId = e.target.dataset.postid;
+  let isManager = e.target.dataset.ismanager;
+  let url =
+    isManager == "0"
+      ? "/developer/post/likeDocument"
+      : "/manager/post/likeDocument";
+  var data = {
+    UserId: userId,
+    postId: postId,
+  };
+
+  $.ajax({
+    type: "POST",
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(data),
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      if (!data.like) {
+        document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML =
+          "";
+        document.querySelectorAll(`[data-postId="${postId}"]`)[0].innerHTML = `
+            <img
+            data-userId="${userId}" data-postId="${postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like"
+                src="http://localhost:3000/img/heartless.png"
+                alt=""
+
+            />`;
+      } else {
+        document.querySelectorAll(
+          `[data-postId="${data.like.postId}"]`
+        )[0].innerHTML = "";
+        document.querySelectorAll(
+          `[data-postId="${data.like.postId}"]`
+        )[0].innerHTML = `
+            <img
+            data-userId="${data?.like?.UserId}" data-postId="${data?.like?.postId}" data-isManager="${isManager}"
+                class="likeIcon invoke-like new"
+                src="http://localhost:3000/img/heart.png"
+                alt=""
+
+            />
+            `;
+      }
+    },
+    error: function (e) {
+      console.log(e);
+      alert("Error while login manager", e);
+    },
+  });
+}
