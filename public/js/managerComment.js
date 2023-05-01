@@ -1,4 +1,4 @@
-var currentUser = $('.headerDiv').data('username');
+var currentUser = $(".headerDiv").data("username");
 var userId = "";
 var postId = "";
 var username = "";
@@ -71,8 +71,8 @@ function getCommentData(UserId, postId) {
                 <div class="modalCommentUsername">
                 <span>Commented By: ${element.userName}</span>
             </div>
-                <div class="modalCommentUsername">
-                    <span>Comment: ${element.content}</span>
+                <div class="modalCommentContent">
+                    <span>${element.content}</span>
                 </div>
             </div>`);
         });

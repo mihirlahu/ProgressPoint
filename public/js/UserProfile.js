@@ -1,4 +1,4 @@
-var currentUser = $('.username').data('username');
+var currentUser = $(".username").data("username");
 var userId = "";
 var postId = "";
 var username = "";
@@ -56,7 +56,9 @@ $(document).ready((e) => {
                                     ${element?.name}
                                 </span>
                             </div>
-                            <span class="postDate">28 April</span>
+                            <span class="postDate">${new Date(
+                              element.createdAt
+                            ).toLocaleDateString()}</span>
                         </div>
                     </div>
                     <div class="postCenter">
@@ -162,7 +164,7 @@ $(document).ready((e) => {
     event.preventDefault();
     let url = "/post/reply";
     var data = {};
-    currentUser = $('.username').data('username');
+    currentUser = $(".username").data("username");
     $("#modalCommentForm")
       .serializeArray()
       .forEach((element) => {
@@ -204,6 +206,10 @@ $(document).ready((e) => {
     getCommentData(userId, postId);
   });
 });
+
+function clearInput() {
+  document.getElementById("comment-content").value = "";
+}
 
 function likePost(e) {
   e.preventDefault();

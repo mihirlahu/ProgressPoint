@@ -1,4 +1,4 @@
-var currentUser = $('.headerDiv').data('username');
+var currentUser = $(".headerDiv").data("username");
 $(document).ready(() => {
   $.ajax({
     type: "GET",
@@ -19,6 +19,9 @@ $(document).ready(() => {
                                                 ${element?.developerId?.name}
                                             </span>
                                         </div>
+                                        <span class="postDate">${new Date(
+                                          element.createdAt
+                                        ).toLocaleDateString()}</span>
                                     </div>
                                   
                                 </div>
@@ -128,6 +131,9 @@ $(document).ready(() => {
                                                 ${element?.managerId?.name}
                                             </span>
                                         </div>
+                                        <span class="postDate">${new Date(
+                                          element.createdAt
+                                        ).toLocaleDateString()}</span>
                                     </div>
                                   
                                 </div>
