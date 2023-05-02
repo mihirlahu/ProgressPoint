@@ -113,7 +113,7 @@ const getDocument = async function(req, res) {
     }
 }
 
-const showAllStudents = async function(req, res) {
+const showAllMembers = async function(req, res) {
     var students = []
     try {
         students = await ClassRoom.findOne({ name: req.body.name })
@@ -123,7 +123,7 @@ const showAllStudents = async function(req, res) {
     }
 }
 
-const searchClassRoom = async function(req, res) {
+const searchChatRoom = async function(req, res) {
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name }).populate('owner', 'name email age')
         if (!chatRoom) {
@@ -181,10 +181,10 @@ module.exports = {
     UpdateProfile: UpdateProfile,
     uploadDocument,
     Upload,
-    showAllStudents,
+    showAllMembers,
     showHomePage,
     getDocument,
-    searchClassRoom,
+    searchChatRoom,
     loadSearch,
     loadHome,
 }

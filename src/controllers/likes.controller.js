@@ -1,4 +1,3 @@
-const path = require('path')
 const Like = require('../models/likes')
 const UploadDocuments = require('../models/documents')
 

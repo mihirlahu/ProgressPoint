@@ -1,22 +1,19 @@
 const express = require('express');
-const Developer = require('../models/developer')
 const auth = require('../middleware/auth').managerAuth
-const sharp = require('sharp')
 const router = new express.Router();
-const multer = require('multer');
-const teacherControllers = require('../controllers/manager.controller')
+const managerController = require('../controllers/manager.controller')
 
-router.post("/register/manager", teacherControllers.Register)
-router.post("/login/manager", teacherControllers.Login)
-router.get("/manager/home", auth, teacherControllers.showHomePage)
-router.post('/manager/chatRoom/uploadDocument', auth, teacherControllers.Upload.single('fileUpload'), teacherControllers.uploadDocument)
-router.get('/manager/chatRoom/getDocument', auth, teacherControllers.getDocument)
-router.get("/classroom/followers", auth, teacherControllers.showAllStudents)
-router.get("/manager/loadHome", auth, teacherControllers.loadHome)
-router.get("/manager/profile", auth, teacherControllers.Profile)
-router.post("/manager/search", auth, teacherControllers.searchClassRoom)
-router.get("/manager/loadSearch", auth, teacherControllers.loadSearch)
-router.get("/manager/logout", auth, teacherControllers.Logout)
-router.patch('/developer/manager/profile/update', auth, teacherControllers.UpdateProfile)
+router.post("/register/manager", managerController.Register)
+router.post("/login/manager", managerController.Login)
+router.get("/manager/home", auth, managerController.showHomePage)
+router.post('/manager/chatRoom/uploadDocument', auth, managerController.Upload.single('fileUpload'), managerController.uploadDocument)
+router.get('/manager/chatRoom/getDocument', auth, managerController.getDocument)
+router.get("/classroom/followers", auth, managerController.showAllMembers)
+router.get("/manager/loadHome", auth, managerController.loadHome)
+router.get("/manager/profile", auth, managerController.Profile)
+router.post("/manager/search", auth, managerController.searchChatRoom)
+router.get("/manager/loadSearch", auth, managerController.loadSearch)
+router.get("/manager/logout", auth, managerController.Logout)
+router.patch('/developer/manager/profile/update', auth, managerController.UpdateProfile)
 
 module.exports = router;

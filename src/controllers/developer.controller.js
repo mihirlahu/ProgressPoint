@@ -174,7 +174,7 @@ const getDocument = async function(req, res) {
     }
 }
 
-const classRoomFollow = async function(req, res) {
+const chatRoomFollow = async function(req, res) {
     const userProfile = req.developer
     const userId = req.developer._id
     const chatRoomId = req.body.id
@@ -213,7 +213,7 @@ const classRoomFollow = async function(req, res) {
     }
 }
 
-const searchClassRoom = async function(req, res) {
+const searchChatRoom = async function(req, res) {
     try {
 
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
@@ -285,16 +285,15 @@ module.exports = {
     showHomePage,
     Profile: Profile,
     Logout: Logout,
-    searchClassRoom,
+    searchChatRoom,
     UpdateProfile: UpdateProfile,
     DeleteProfile: DeleteProfile,
-    //uploadAvatar: uploadAvatar,
     Upload,
     UploadDocument,
     loadSearch,
     getDocument,
     loadClassDetails,
     loadClassRoom,
-    classRoomFollow,
+    chatRoomFollow,
     loadHome,
 }
