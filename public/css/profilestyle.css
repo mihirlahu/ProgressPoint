@@ -8,7 +8,7 @@
   align-items: center;
   width: 100%;
   justify-content: center;
-  background-color: #b2d699;
+  background-color: #7fa72f;
   margin-bottom: 20px;
   border-radius: 0 0 10px 10px;
   padding: 10px;
@@ -25,7 +25,7 @@
   align-self: center;
 }
 .nav-link:hover {
-  background-color: #6c8f53;
+  background-color: rgb(122, 172, 22);
 }
 
 .flex-column {
@@ -192,7 +192,7 @@ h6 {
   flex-direction: column;
   width: 25%;
   align-items: center;
-  background-color: #91bf70;
+  background-color: yellowgreen;
 }
 
 .mainContainer {
@@ -202,6 +202,9 @@ h6 {
   background-color: lightgray;
   align-items: center;
   overflow: scroll;
+  background-image: url("http://localhost:3000/img/pngwing4.png");
+  background-repeat: repeat;
+  background-size: cover;
 }
 
 .headerDiv {
