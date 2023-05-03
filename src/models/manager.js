@@ -57,6 +57,10 @@ const managerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed,
         default: {}
     },
+    following: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {}
+    },
     tokens: [{
         token: {
             type: String,

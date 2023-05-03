@@ -91,7 +91,35 @@ const uploadDocument = async function(req, res) {
             await uploadDocument.populate('managerId', 'name email age').populate('developerId', 'name email age').execPopulate()
             res.send(uploadDocument);
         } else {
+            const developer = Object.keys(chatRoom.developer);
+            var flag = 0
+            if (developer.length > 0) {
+                for(let i = 0; i < developer.length; i++) {
+                    if (developer[i] == req.manager._id.toString()) {
+                        flag = 1
+                        break;
+                    }
+                }
+                if(!flag) {
+                    throw new Error("Developer does not belong to chat room")
+                }
+            } else {
+                throw new Error("Developer does not belong to chat room")
+            }
+            if(flag == 1) {
+                const uploadDocument = new UploadDocuments({
+                    managerId: req.manager._id,
+                    chatRoomId: chatRoom.id,
+                    name: req.body.name,
+                    description: req.body.description
+                })
+                uploadDocument.fileUpload = file
+                await uploadDocument.save()
+                await uploadDocument.populate('managerId', 'name email age').populate('developerId', 'name email age').execPopulate()
+                res.send(uploadDocument);
+            }else {
             throw new error()
+            }
         }
     } catch (e) {
         if (e) {
@@ -171,6 +199,45 @@ const loadHome = async function(req, res) {
     res.send(documents)
 }
 
+const chatRoomFollow = async function(req, res) {
+    const userProfile = req.manager
+    const userId = req.manager._id
+    const chatRoomId = req.body.id
+    try {
+        const chatRoom = await ClassRoom.findOne({ _id: chatRoomId })
+        if (chatRoomId in userProfile.following) {
+
+            delete userProfile.following[chatRoomId]
+            delete chatRoom.developer[userId]
+
+            userProfile.chatRoomCount = userProfile.chatRoomCount - 1
+            chatRoom.developerCount = chatRoom.developerCount - 1
+
+            userProfile.markModified('following')
+            userProfile.markModified('chatRoomCount')
+            chatRoom.markModified('developer')
+            chatRoom.markModified('developerCount')
+            await chatRoom.save()
+            await userProfile.save()
+            return res.status(201).send(userProfile)
+        }
+        chatRoom.developer[userId] = userId
+        userProfile.following[chatRoomId] = chatRoomId
+        userProfile.chatRoomCount = userProfile.chatRoomCount + 1
+        chatRoom.developerCount = chatRoom.developerCount + 1
+        userProfile.markModified('following')
+        userProfile.markModified('chatRoomCount')
+        chatRoom.markModified('developer')
+        chatRoom.markModified('developerCount')
+        await chatRoom.save()
+        await userProfile.save()
+        res.send(userProfile)
+
+    } catch (e) {
+        res.status(500).send("somthing went wrong");
+    }
+}
+
 
 
 module.exports = {
@@ -187,4 +254,5 @@ module.exports = {
     searchChatRoom,
     loadSearch,
     loadHome,
+    chatRoomFollow,
 }

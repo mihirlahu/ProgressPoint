@@ -17,8 +17,7 @@ $(document).ready(() => {
       success: function (data) {
         $(".b").remove();
         var flag = 0;
-        console.log(data);
-        var buttonHtml;
+        $("#append").empty()
         if (data.developer) {
           var students = Object.keys(data.developer);
           students.forEach((element) => {

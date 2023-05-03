@@ -15,5 +15,5 @@ router.post("/manager/search", auth, managerController.searchChatRoom)
 router.get("/manager/loadSearch", auth, managerController.loadSearch)
 router.get("/manager/logout", auth, managerController.Logout)
 router.patch('/developer/manager/profile/update', auth, managerController.UpdateProfile)
-
+router.post('/manager/follow', auth, managerController.chatRoomFollow)
 module.exports = router;

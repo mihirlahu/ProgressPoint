@@ -78,16 +78,20 @@ $(document).ready(() => {
       data: JSON.stringify(data),
       dataType: "json",
       success: function (data1) {
-        var following = Object.keys(data1.following);
-        var flag = 0;
-        following.forEach((element) => {
-          if (element == data.id) {
-            flag = 1;
-            return;
+        if (data1 && data1.following) {
+          var following = Object.keys(data1?.following);
+          var flag = 0;
+          following.forEach((element) => {
+            if (element == data.id) {
+              flag = 1;
+              return;
+            }
+          });
+          if (flag == 1) {
+            $("button.followClass").html("Unfollow");
+          } else {
+            $("button.followClass").html("Follow");
           }
-        });
-        if (flag == 1) {
-          $("button.followClass").html("UnFollow");
         } else {
           $("button.followClass").html("Follow");
         }

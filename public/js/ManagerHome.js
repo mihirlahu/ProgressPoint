@@ -37,6 +37,7 @@ $(document).ready(() => {
     type: "GET",
     url: "/manager/loadHome",
     success: function (data) {
+      $("#toAppend").empty()
       data.forEach((element) => {
         console.log(element);
         if (element.developerId) {
