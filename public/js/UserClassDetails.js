@@ -19,7 +19,8 @@ $(document).ready(() => {
                <div class = "chatRoom">
                     <div class="chatRoomWrapper">
                         <div class="chatRoomTop">
-                            <div class = "classroom-title">
+                        <div>
+                          <div class = "classroom-title">
                                 <h1>
                                 ${element.name}
                                 </h1>
@@ -27,6 +28,8 @@ $(document).ready(() => {
                             <div class = "classroom-description">
                                 <h5><b>Description :</b> ${element.description}</h5>
                             </div>  
+                        </div>
+                            
                         </div>
 
                         <hr class="chatRoomHr">

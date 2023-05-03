@@ -228,6 +228,12 @@ h3 {
   flex-direction: column;
 }
 
+.chatRoomTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .chatRoomHr {
   margin: 10px;
   color: grey;
