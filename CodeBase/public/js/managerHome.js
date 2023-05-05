@@ -23,11 +23,11 @@ $(document).ready(() => {
       dataType: "json",
       success: function (data) {
         alert("Chat room created Succesfully");
-        clearInput();
+        clearInputChatroom();
       },
       error: function (e) {
         alert("Chat room name already taken");
-        clearInput();
+        clearInputChatroom();
         console.log(e);
       },
     });
@@ -37,7 +37,7 @@ $(document).ready(() => {
     type: "GET",
     url: "/manager/loadHome",
     success: function (data) {
-      $("#toAppend").empty()
+      $("#toAppend").empty();
       data.forEach((element) => {
         console.log(element);
         if (element.developerId) {
@@ -267,7 +267,7 @@ $(document).ready(() => {
   });
 });
 
-function clearInput() {
+function clearInputChatroom() {
   document.getElementById("exampleFormControlTextarea11").value = "";
   document.getElementById("exampleFormControlTextarea12").value = "";
 }
