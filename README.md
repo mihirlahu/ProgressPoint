@@ -22,6 +22,7 @@ HOW TO RUN THE CODE:
 
 Make sure you have NODE.JS and NPM installed along with BREW.
 https://brew.sh/#install
+
 Make sure you have MongoDB installed, and it's up and running.
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 
