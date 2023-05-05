@@ -9,14 +9,12 @@ development projects. This platform will help software engineers stay aligned, w
 =======================================================================================================
 
 Project group
-Bapat Parth, bapatparth@vt.edu, bapatanuparth
 
+Bapat Parth, bapatparth@vt.edu, bapatanuparth
 
 Palyekar Mihir Lahu, mihirlahu@vt.edu, mihirlahu
 
-
 Joshi Vivek, vivekj@vt.edu, Vivek-Joshi-99
-
 
 Deegoju Sushma, sushmad@vt.edu, Sushmadeegoju
 
