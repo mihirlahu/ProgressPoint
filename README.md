@@ -6,12 +6,16 @@ The platform will enable software engineers to be a part of multiple team rooms,
 in real-time. The platform will enable developers to react and comment on each others’ posts and communicate. With Progress Point, we aim to improve teamwork and productivity in software
 development projects. This platform will help software engineers stay aligned, work together to solve problems efficiently, and deliver high-quality software products on time.
 
+=========================================================================================================================================
 
 Project group
 Bapat Parth, bapatparth@vt.edu, bapatanuparth
 Palyekar Mihir Lahu, mihirlahu@vt.edu, mihirlahu
 Joshi Vivek, vivekj@vt.edu, Vivek-Joshi-99
 Deegoju Sushma, sushmad@vt.edu, Sushmadeegoju
+
+=========================================================================================================================================
+
 
 HOW TO RUN THE CODE:
 
@@ -23,9 +27,15 @@ https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 RUN: SUDO NPM INSTALL (RUN THIS COMMAND AS ADMIN)
 TO START THE CODE: NPM RUN DEV
 
+For more information please refer to the following document link
+Link: 
+
+=========================================================================================================================================
 HOW TO TEST THE CODE:
 Please refer to the testing file attached for more information: 
 Link: https://github.com/mihirlahu/ProgressPoint---Real-Time-Communication-Platform/blob/main/How%20to%20run%20tests.pdf
+
+=========================================================================================================================================
 
 
 Use Case: Creating a New Team Room
@@ -43,3 +53,6 @@ If the chat room name is already used, new chat room will not be created.
 
 Postcondition:
 The software engineer has successfully created a new team room, this team room is visible on search page and can now collaborate with the team members using the Progress Point application.
+
+
+=========================================================================================================================================
