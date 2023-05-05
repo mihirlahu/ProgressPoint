@@ -29,9 +29,6 @@ RUN: SUDO NPM INSTALL (RUN THIS COMMAND AS ADMIN)
 
 TO START THE CODE: NPM RUN DEV
 
-For more information please refer to the following document link
-Link:  
-
 
 =======================================================================================================
 
