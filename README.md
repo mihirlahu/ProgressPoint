@@ -62,4 +62,12 @@ If the chat room name is already used, new chat room will not be created.
 Postcondition:
 The software engineer has successfully created a new team room, this team room is visible on search page and can now collaborate with the team members using the Progress Point application.
 
+How to run the use case:
+1) Create a manager account using signup procedure.
+2) Create a chat room by using the main flow of the usecase.
+
+Expected Behaviour:
+1) User is alerted about the new created chat room.
+2) Developers and other managers are able to search the classroom.
+
 =======================================================================================================
