@@ -6,7 +6,7 @@ The platform will enable software engineers to be a part of multiple team rooms,
 in real-time. The platform will enable developers to react and comment on each others’ posts and communicate. With Progress Point, we aim to improve teamwork and productivity in software
 development projects. This platform will help software engineers stay aligned, work together to solve problems efficiently, and deliver high-quality software products on time.
 
-=========================================================================================================================================
+===========================================================================================================
 
 Project group
 Bapat Parth, bapatparth@vt.edu, bapatanuparth
@@ -31,6 +31,8 @@ For more information please refer to the following document link
 Link: 
 
 =========================================================================================================================================
+
+
 HOW TO TEST THE CODE:
 Please refer to the testing file attached for more information: 
 Link: https://github.com/mihirlahu/ProgressPoint---Real-Time-Communication-Platform/blob/main/How%20to%20run%20tests.pdf
