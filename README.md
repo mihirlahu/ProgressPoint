@@ -24,9 +24,9 @@ Deegoju Sushma, sushmad@vt.edu, Sushmadeegoju
 
 HOW TO RUN THE CODE:
 
-MAKE SURE YOU HAVE NODE.JS AND NPM IS INSTALLED ALONG WITH BREW.
+Make sure you have NODE.JS and NPM is installed along with BREW.
 https://brew.sh/#install
-MAKE SURE YOU YOU Hvw mongoDB inSTALLED, AND ITS UP AND RUNNING.
+Make sure you have MONGODB installed, and its up and running.
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 
 RUN: SUDO NPM INSTALL (RUN THIS COMMAND AS ADMIN)
