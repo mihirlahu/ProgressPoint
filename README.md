@@ -26,6 +26,7 @@ Make sure you have MongoDB installed, and it's up and running.
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 
 RUN: SUDO NPM INSTALL (RUN THIS COMMAND AS ADMIN)
+
 TO START THE CODE: NPM RUN DEV
 
 For more information please refer to the following document link
