@@ -17,19 +17,24 @@ Project group
 
 =======================================================================================================
 
+LINK FOR DEMO VIDEOS (WALKTHROUGH AND UNIT TESTS)
+The videos are posted to this folder -
+https://drive.google.com/drive/folders/17i4vWImHc0WAO-3f9o0YYum4tLKcQeFU?usp=sharing
+
+=======================================================================================
+
 
 HOW TO RUN THE CODE:
 
 Make sure you have NODE.JS and NPM installed along with BREW.
 https://brew.sh/#install
+
 Make sure you have MongoDB installed, and it's up and running.
 https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
 
 RUN: SUDO NPM INSTALL (RUN THIS COMMAND AS ADMIN)
-TO START THE CODE: NPM RUN DEV
 
-For more information please refer to the following document link
-Link:  
+TO START THE CODE: NPM RUN DEV
 
 
 =======================================================================================================
