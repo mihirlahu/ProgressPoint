@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// This is a model for document
 const documentSchema = new mongoose.Schema({
     developerId: {
         type: mongoose.Schema.Types.ObjectId,

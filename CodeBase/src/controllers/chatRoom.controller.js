@@ -1,6 +1,8 @@
 const ChatRoom = require("../models/chatRoom")
 require('express-fileupload')
 
+// This function creates a new chat room by taking the request object (req) and response object (res) as input. The function first creates a new instance of the ChatRoom model by destructuring the request body and adding the owner field to it, which is set to the _id of the current user.
+// If the save operation is successful, the function updates the chatRooms and chatRoomCreatedCount fields of the current user and saves the changes to the database. Finally, it sends a response with the status code 201 and the newly created chat room object. If there is an error during the save operation, the function sends a response with the status code 400 and the error object.
 
 const createChatRoom = async function(req, res) {
     const chatRoom = new ChatRoom({
@@ -22,6 +24,10 @@ const createChatRoom = async function(req, res) {
     }
 }
 
+// This function retrieves all chat rooms created by the current user by taking the request object (req) and response object (res) as input. The function finds all chat rooms in the database where the owner field is equal to the _id of the current user.
+// If the find operation is successful, the function sends a response with the retrieved chat rooms as an array. If there is an error during the find operation, the function sends a response with the status code 500 and the error object.
+
+
 const readAllChatRoom = async function(req, res) {
 
     var allClass = []
@@ -35,6 +41,10 @@ const readAllChatRoom = async function(req, res) {
     }
 }
 
+
+// This function retrieves all chat rooms followed by the current user by taking the request object (req) and response object (res) as input. The function finds all chat rooms in the database where the developer field is equal to the _id of the current user.
+// If the find operation is successful, the function sends a response with the retrieved chat rooms as an array. If there is an error during the find operation, the function sends a response with the status code 500 and the error object.
+
 const getAllFollowedChatRoom = async (req,res) => {
     var allClass = [];
     try {
@@ -47,6 +57,8 @@ const getAllFollowedChatRoom = async (req,res) => {
     }
 }
 
+// This function retrieves a chat room by its ID by taking the request object (req) and response object (res) as input. The function finds a chat room in the database where the _id field is equal to the id field in the request body.
+// If the find operation is successful and the chat room exists, the function sends a response with the retrieved chat room object. If the chat room does not exist, the function sends a response with the status code 404. If there is an error during the find operation, the function sends a response with the status code 500.
 
 
 const readChatRoomById = async function(req, res) {

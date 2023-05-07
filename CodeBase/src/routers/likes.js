@@ -4,6 +4,7 @@ const authManager = require('../middleware/auth').managerAuth
 const router = new express.Router();
 const likesController = require('../controllers/likes.controller')
 
+// this is routes for likes
 router.post('/developer/post/likeDocument', likesController.likeDocumentController);
 router.post('/manager/post/likeDocument', likesController.likeDocumentController);
 

@@ -1,6 +1,8 @@
 const Like = require('../models/likes')
 const UploadDocuments = require('../models/documents')
 
+
+// This function is used to like a post
 const likeDocumentController = async function(req, res) {
     try {
         const like = await Like.findOne({ UserId: req.body.UserId, postId: req.body.postId })

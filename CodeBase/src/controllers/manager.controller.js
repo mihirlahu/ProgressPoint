@@ -7,6 +7,8 @@ const Documents = require('../models/documents')
 
 const path = require('path')
 
+//This route is used to register a new manager. It takes the manager's details from the request body, creates a new "Manager" document in MongoDB, and returns the created document along with a JSON Web Token (JWT).
+
 const Register = async function(req, res) {
     const manager = new Manager(req.body);
     try {
@@ -19,6 +21,8 @@ const Register = async function(req, res) {
     }
 }
 
+//This route is used to log in a manager. It takes the manager's email and password from the request body, checks if the email and password match with an existing "Manager" document in MongoDB, and returns the document along with a JWT.
+
 const Login = async function(req, res) {
     try {
         const manager = await Manager.findByCredentials(req.body.email, req.body.password);
@@ -29,6 +33,8 @@ const Login = async function(req, res) {
         res.status(400).send(e)
     }
 }
+
+//This route is used to log out a manager. It takes a JWT from the request headers, removes the JWT from the "tokens" array of the corresponding "Manager" document in MongoDB, and redirects to the login page.
 
 const Logout = async function(req, res) {
     try {
@@ -42,6 +48,8 @@ const Logout = async function(req, res) {
         res.status(500).send()
     }
 }
+
+//This route is used to update the manager's profile. It takes the updated profile details from the request body, checks if the update operation is valid, updates the corresponding "Manager" document in MongoDB, and returns the updated document.
 
 const UpdateProfile = async function(req, res) {
     const updates = Object.keys(req.body);
@@ -73,9 +81,9 @@ var storage = multer.diskStorage({
 
 const Upload = multer({ storage: storage })
 
+//This route is used to upload a document to a chat room. It takes the chat room name, document name, description, and the file to upload from the request body and file, creates a new "UploadDocuments" document in MongoDB, and returns the created document.
+
 const uploadDocument = async function(req, res) {
-    //if want to restrict the size and dimentions uncomment below line and replace  uploadDocument.fileUpload = file with uploadDocument.fileUpload = buffer
-    //const buffer = await sharp(req.file).resize({ width: 250, height: 250 }).png()
     const file = req.file
     try {
         const chatRoom = await ClassRoom.findOne({ name: req.body.name })
@@ -131,6 +139,8 @@ const uploadDocument = async function(req, res) {
     }
 }
 
+//This route is used to get all the documents uploaded by the manager. It fetches all the "UploadDocuments" documents in MongoDB that are uploaded by the manager and returns them.
+
 const getDocument = async function(req, res) {
     try {
         var id = req.manager._id.toString()
@@ -141,6 +151,8 @@ const getDocument = async function(req, res) {
     }
 }
 
+//This route is used to get all the members of a chat room. It takes the chat room name from the request body, fetches the corresponding "ClassRoom" document in MongoDB, and returns the "students" array of the document.
+
 const showAllMembers = async function(req, res) {
     var students = []
     try {
@@ -150,6 +162,8 @@ const showAllMembers = async function(req, res) {
         res.status(500).send("somthing went wrong")
     }
 }
+
+//This route is used to search for a chat room. It takes the chat room name from the request body, fetches the corresponding "ClassRoom" document in MongoDB, and returns the document.
 
 const searchChatRoom = async function(req, res) {
     try {
@@ -163,6 +177,8 @@ const searchChatRoom = async function(req, res) {
     }
 }
 
+//This route is used to load the search page for managers. It renders the "ManagerSearch" view.
+
 const loadSearch = async function(req, res) {
     try {
         const developer = req.manager
@@ -171,6 +187,8 @@ const loadSearch = async function(req, res) {
         res.status(500).send("Something went wrong while loading page")
     }
 }
+
+//This route is used to load the home page for managers. It renders the "ManagerHome" view.
 
 const showHomePage = async function(req, res) {
     try {
@@ -183,6 +201,8 @@ const showHomePage = async function(req, res) {
     }
 }
 
+//This route is used to load the profile page for managers. It renders the "ManagerProfile" view.
+
 const Profile = async function(req, res) {
     const developer = req.manager
     res.render('ManagerProfile', {
@@ -190,7 +210,7 @@ const Profile = async function(req, res) {
     })
 }
 
-
+//This route is used to load the documents uploaded by the manager. It fetches all the "Documents" documents in MongoDB that are uploaded to the chat rooms owned by the manager and returns them.
 
 const loadHome = async function(req, res) {
     var chatRooms = Object.keys(req.manager.chatRooms)
@@ -199,6 +219,7 @@ const loadHome = async function(req, res) {
     res.send(documents)
 }
 
+//This function provides the follow functionality to the manager
 const chatRoomFollow = async function(req, res) {
     const userProfile = req.manager
     const userId = req.manager._id
@@ -237,8 +258,6 @@ const chatRoomFollow = async function(req, res) {
         res.status(500).send("somthing went wrong");
     }
 }
-
-
 
 module.exports = {
     Register: Register,

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const Developer = require('../models/developer');
 const Manager = require('../models/manager')
 
+//This is a auth function for developer
 const developerAuth = async(req, res, next) => {
     try {
         const token = req.cookies.access_token
@@ -17,6 +18,8 @@ const developerAuth = async(req, res, next) => {
         res.status(401).send({ error: 'please authenticate' });
     }
 }
+
+//This is a auth function for manager
 const managerAuth = async(req, res, next) => {
     try {
 

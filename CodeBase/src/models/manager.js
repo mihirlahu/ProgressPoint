@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Tasks = require('./chatRoom')
 
+// This is a model for manager schema
 const managerSchema = new mongoose.Schema({
     name: {
         type: String,

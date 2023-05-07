@@ -5,6 +5,7 @@ const Reply = require('../models/reply')
 const UploadDocuments = require('../models/documents')
 const replyController = require('../controllers/reply.controller')
 
+// This is route for reply
 router.post('/post/reply', replyController.createReply)
 router.delete('/post/reply/delete', replyController.deleteReply)
 router.post("/post/reply/like", replyController.likeReply)

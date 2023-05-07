@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const Tasks = require('./chatRoom')
 const DocumentData = require('./documents')
 
+//This is model for developer
 const developerSchema = new mongoose.Schema({
     name: {
         type: String,

@@ -7,6 +7,9 @@ const ClassRoom = require('../models/chatRoom')
 const Document = require('../models/documents')
 const path = require('path')
 
+
+// The Register function is used to register a new developer. It creates a new instance of the Developer model, saves it to the database using await developer.save(), generates an authentication token using await developer.generateAuthToken(), sets the token in a cookie using res.cookie('access_token', token), and sends the response as an object containing the developer and a redirect URL to the home page.
+
 const Register = async function(req, res) {
 
     const developer = new Developer(req.body);
@@ -21,6 +24,8 @@ const Register = async function(req, res) {
     }
 }
 
+// The Login function is used to log in an existing developer. It calls the findByCredentials method of the Developer model to find the developer with the given email and password. If found, it generates an authentication token using the await developer.generateAuthToken(), sets the token in a cookie using res.cookie('access_token', token), and sends the response as an object containing the developer and a redirect URL to the home page.
+
 const Login = async function(req, res) {
     try {
         const developer = await Developer.findByCredentials(req.body.email, req.body.password);
@@ -31,6 +36,8 @@ const Login = async function(req, res) {
         res.status(400).send(e)
     }
 }
+
+// The showHomePage function is used to render the home page of the logged-in developer. It gets the current developer using req.developer, passes it to the res.render method along with the name of the EJS view to be rendered.
 
 const showHomePage = async function(req, res) {
     try {
@@ -45,12 +52,17 @@ const showHomePage = async function(req, res) {
     }
 }
 
+// The Profile function is used to render the profile page of the logged-in developer. It gets the current developer using req.developer, passes it to the res.render method along with the name of the EJS view to be rendered.
+
 const Profile = async function(req, res) {
     const developer = req.developer
     res.render('UserProfile', {
         developer,
     })
 }
+
+
+// The Logout function is used to log out the current developer by removing the authentication token from the tokens array of the Developer model. It gets the current developer using req.developer, filters out the token to be removed using req.token, and saves the updated developer to the database using await req.developer.save(). Finally, it renders the login page.
 
 const Logout = async function(req, res) {
     try {
@@ -64,6 +76,9 @@ const Logout = async function(req, res) {
         res.status(500).render('login')
     }
 }
+
+
+// The UpdateProfile function is used to update the profile of the current developer. It checks if the update operation is valid by checking if the keys in the req.body object are allowed. If the update operation is valid, it updates the current developer using req.developer[update] = req.body[update] and saves the updated developer to the database using await req.developer.save(). Finally, it sends the response as an object containing the developer and a redirect URL to the profile page.
 
 const UpdateProfile = async function(req, res) {
     const updates = Object.keys(req.body);
@@ -83,6 +98,9 @@ const UpdateProfile = async function(req, res) {
         res.status(400).send(e)
     }
 }
+
+
+// The DeleteProfile function is used to delete the profile of the current developer. It removes the developer from the database using await req.developer.remove() and removes the developer's ID from the following and follower objects of other developers using await Developer.updateMany(). Finally, it sends the response as the deleted 
 
 const DeleteProfile = async function(req, res) {
     try {
@@ -107,7 +125,7 @@ const DeleteProfile = async function(req, res) {
     }
 }
 
-
+//This function is used to upload the file to DB
 
 var storage = multer.diskStorage({
     destination: './public/images/',
@@ -117,6 +135,8 @@ var storage = multer.diskStorage({
 })
 
 const Upload = multer({ storage: storage })
+
+// This function is used to upload the documents
 
 const UploadDocument = async function(req, res) {
     const file = req.file
@@ -164,6 +184,7 @@ const UploadDocument = async function(req, res) {
     }
 }
 
+// This function is used to get the documents
 const getDocument = async function(req, res) {
     try {
         var chatRoom = []
@@ -173,6 +194,9 @@ const getDocument = async function(req, res) {
         res.status(500).send("somthing went wrong while getting document");
     }
 }
+
+
+// This function is used to follow the chat room
 
 const chatRoomFollow = async function(req, res) {
     const userProfile = req.developer
@@ -213,6 +237,8 @@ const chatRoomFollow = async function(req, res) {
     }
 }
 
+// This function is used to search the chat room
+
 const searchChatRoom = async function(req, res) {
     try {
 
@@ -228,6 +254,8 @@ const searchChatRoom = async function(req, res) {
     }
 }
 
+// This function is used to load the search details
+
 const loadSearch = async function(req, res) {
     try {
         const developer = req.developer
@@ -238,6 +266,8 @@ const loadSearch = async function(req, res) {
     }
 }
 
+// This function is used to load the class details
+
 const loadClassDetails = async function(req, res) {
     try {
         const developer = req.developer
@@ -247,6 +277,9 @@ const loadClassDetails = async function(req, res) {
         res.status(500).send("somthing went wrong while loading page")
     }
 }
+
+// This function is used to load the chat room
+
 const loadClassRoom = async function(req, res) {
         try {
 
@@ -262,12 +295,12 @@ const loadClassRoom = async function(req, res) {
         }
     }
 
-
+// This function is used to load the home page
 const loadHome = async function(req, res) {
-    var following = Object.keys(req.developer.following)
+   
+    var chatRooms = Object.keys(req.developer.following)
 
-    const documents = await Document.find({ $or: [{ $and: [{ chatRoomId: { $in: following } }, { managerId: { $exists: true } }] }, { $and: [{ chatRoomId: { $in: following } }, { developerId: { $nin: req.developer._id } }] }] }).populate('managerId', 'name email age').populate('developerId', 'name email age')
-
+    const documents = await Document.find({ chatRoomId: { $in: chatRooms } }).populate('managerId', 'name email age').populate('developerId', 'name email age')
     documents.forEach(element => {
         if (element.managerId) {
             element.populate('managerId', 'name email age').execPopulate()
@@ -275,7 +308,6 @@ const loadHome = async function(req, res) {
             element.populate('developerId', 'name email age').execPopulate()
         }
     });
-    //console.log(documents);
     res.send(documents)
 }
 

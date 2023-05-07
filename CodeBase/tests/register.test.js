@@ -2,7 +2,7 @@ const assert = require("chai").assert;
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const request = require("supertest");
-const app = require("../../index.js"); // assuming your express app is in app.js
+const app = require("../index.js"); // assuming your express app is in app.js
 const Developer = require("../src/models/developer");
 const expect = chai.expect;
 chai.use(chaiHttp);

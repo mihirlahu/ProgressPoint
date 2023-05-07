@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// This is a model for like
 const likeSchema = new mongoose.Schema({
     UserId: {
         type: mongoose.Schema.Types.ObjectId,

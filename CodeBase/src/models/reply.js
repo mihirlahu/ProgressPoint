@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Like = require('./likes')
 
-
+//This is model for reply schema
 const replySchema = new mongoose.Schema({
     UserId: {
         type: mongoose.Schema.Types.ObjectId,

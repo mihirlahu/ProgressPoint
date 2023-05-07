@@ -2,6 +2,9 @@ const Reply = require("../models/reply");
 const UploadDocuments = require("../models/documents");
 const Like = require("../models/likes");
 
+
+//This function is responsible for creating a new reply to a post. It takes in the request and response objects as parameters, creates a new instance of the Reply model, increments the reply count of the corresponding UploadDocuments model, and saves the reply object to the database.
+
 const createReply = async function (req, res) {
   const reply = new Reply({
     ...req.body,
@@ -22,6 +25,9 @@ const createReply = async function (req, res) {
   }
 };
 
+
+//This function is responsible for creating a new reply to a post. It takes in the request and response objects as parameters, creates a new instance of the Reply model, increments the reply count of the corresponding UploadDocuments model, and saves the reply object to the database.
+
 const getReply = async function (req, res) {
   const reply = new Reply({
     ...req.body,
@@ -34,6 +40,9 @@ const getReply = async function (req, res) {
     res.status(400).send(e);
   }
 };
+
+
+//This function is responsible for adding or removing a like on a reply. It takes in the request and response objects as parameters, finds the like object using the reply's id and the user's id, updates the like count of the corresponding Reply model, saves the like object to the database if it doesn't exist, removes the like object from the database if it already exists, and returns a success message.
 
 const deleteReply = async function (req, res) {
   try {
@@ -59,6 +68,9 @@ const deleteReply = async function (req, res) {
     res.status(500).send();
   }
 };
+
+
+//This function is responsible for retrieving all replies for a given post. It takes in the request and response objects as parameters, finds all reply objects using the post's id, and returns the list of replies.
 
 const likeReply = async function (req, res) {
   try {

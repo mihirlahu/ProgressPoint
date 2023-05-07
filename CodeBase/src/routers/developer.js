@@ -4,6 +4,7 @@ const router = new express.Router();
 const developerControllers = require('../controllers/developer.controller')
 const classRoomController = require('./../controllers/chatRoom.controller')
 
+// This is a routes for developer
 router.post("/register/developer", developerControllers.Register)
 router.post("/login/developer", developerControllers.Login)
 router.get("/developer/home", auth, developerControllers.showHomePage)

@@ -3,6 +3,7 @@ const auth = require('../middleware/auth').managerAuth
 const router = new express.Router();
 const managerController = require('../controllers/manager.controller')
 
+//this is route fir manager
 router.post("/register/manager", managerController.Register)
 router.post("/login/manager", managerController.Login)
 router.get("/manager/home", auth, managerController.showHomePage)
